@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/users",
                                 "/users/auth",
+                                "/auth/refresh",
 
                                 // Swagger
                                 "/v3/api-docs/**",

@@ -1,5 +1,7 @@
-package br.com.harmony.DocGuard.application.services.user.Auth;
+package br.com.harmony.DocGuard.application.services.auth.authentication;
 
+import br.com.harmony.DocGuard.application.services.auth.jwt.JwtService;
+import br.com.harmony.DocGuard.application.services.auth.session.SessionService;
 import br.com.harmony.DocGuard.infrastructure.repository.config.ApiResponse;
 import br.com.harmony.DocGuard.infrastructure.repository.user.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -7,22 +9,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthService {
-
+public class AuthenticationService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final SessionService sessionService;
 
-    public AuthService(UserRepository repository, JwtService jwtService,  SessionService sessionService) {
+    public AuthenticationService(UserRepository repository, JwtService jwtService, SessionService sessionService) {
         this.repository = repository;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.jwtService = jwtService;
         this.sessionService = sessionService;
     }
 
-    public ApiResponse<AuthResponse> execute(AuthRequest request) {
-
+    public ApiResponse<AuthenticationResponse> execute(AuthenticationRequest request) {
         var userOpt = repository.findByEmail(request.getEmail());
 
         if (userOpt.isEmpty()) {
@@ -45,7 +45,7 @@ public class AuthService {
 
         String refreshToken = sessionService.createSession(user);
 
-        AuthResponse response = new AuthResponse(accessToken, refreshToken);
+        AuthenticationResponse response = new AuthenticationResponse(accessToken, refreshToken);
 
         return new ApiResponse<>(true, "Authenticated successfully", response);
     }

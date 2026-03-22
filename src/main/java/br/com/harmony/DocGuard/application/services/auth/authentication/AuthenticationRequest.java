@@ -1,14 +1,14 @@
-package br.com.harmony.DocGuard.application.services.user.Auth;
-
+package br.com.harmony.DocGuard.application.services.auth.authentication;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-public class AuthRequest {
+public class AuthenticationRequest {
 
     @NotBlank(message = "Email is required")
     private String email;

@@ -1,4 +1,4 @@
-package br.com.harmony.DocGuard.application.services.user.Auth;
+package br.com.harmony.DocGuard.application.services.auth.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

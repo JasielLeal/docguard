@@ -1,4 +1,4 @@
-package br.com.harmony.DocGuard.application.services.user.Auth;
+package br.com.harmony.DocGuard.application.services.auth.session;
 
 import br.com.harmony.DocGuard.domain.model.Session;
 import br.com.harmony.DocGuard.domain.model.User;
