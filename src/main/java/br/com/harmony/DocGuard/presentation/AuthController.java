@@ -6,6 +6,7 @@ import br.com.harmony.DocGuard.application.services.auth.authentication.Authenti
 import br.com.harmony.DocGuard.application.services.auth.forgotPassword.ForgotPasswordRequest;
 import br.com.harmony.DocGuard.application.services.auth.forgotPassword.ForgotPasswordService;
 import br.com.harmony.DocGuard.application.services.auth.refreshToken.RefreshTokenRequest;
+import br.com.harmony.DocGuard.application.services.auth.refreshToken.RefreshTokenResponse;
 import br.com.harmony.DocGuard.application.services.auth.refreshToken.RefreshTokenService;
 import br.com.harmony.DocGuard.application.services.auth.resetPassword.ResetPasswordRequest;
 import br.com.harmony.DocGuard.application.services.auth.resetPassword.ResetPasswordService;
@@ -53,7 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ApiResponse<Void> refresh(@RequestBody @Valid RefreshTokenRequest request){
+    public ApiResponse<RefreshTokenResponse> refresh(@RequestBody @Valid RefreshTokenRequest request){
         return refreshTokenService.execute(request);
     }
 

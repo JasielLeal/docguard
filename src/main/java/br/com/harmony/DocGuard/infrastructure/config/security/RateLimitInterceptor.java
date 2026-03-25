@@ -17,7 +17,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     private final Map<String, Bucket> buckets = new ConcurrentHashMap<>();
 
     private static final Map<String, int[]> ROUTE_LIMITS = Map.of(
-            "/auth",                  new int[]{10, 15},
+            "/auth",                  new int[]{100, 15},
             "/auth/forgot-password",  new int[]{3,  15},
             "/auth/reset-password",   new int[]{5,  15},
             "/auth/verification-otp", new int[]{5,  15},

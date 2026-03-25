@@ -12,4 +12,6 @@ public interface SessionRepository extends JpaRepository<Session, UUID> {
     Optional<Session> removeSessionByUser_Id(UUID userId);
 
     Optional<Session> findByUser_Id(UUID userId);
+
+    void deleteAllByUser_Id(UUID id);
 }

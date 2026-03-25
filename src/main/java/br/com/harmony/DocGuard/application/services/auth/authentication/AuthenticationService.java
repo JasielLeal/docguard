@@ -21,9 +21,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final SessionService sessionService;
 
-    public AuthenticationService(UserRepository repository, JwtService jwtService, SessionService sessionService, SessionRepository sessionRepository) {
+    public AuthenticationService(UserRepository repository,
+                                 JwtService jwtService,
+                                 SessionService sessionService,
+                                 SessionRepository sessionRepository,
+                                    PasswordEncoder passwordEncoder
+    ) {
         this.repository = repository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.sessionService = sessionService;
         this.sessionRepository = sessionRepository;
@@ -50,7 +55,7 @@ public class AuthenticationService {
             throw new ApiException("Invalid email or password", HttpStatus.UNAUTHORIZED);
         }
 
-        sessionRepository.removeSessionByUser_Id(user.getId());
+        sessionRepository.deleteAllByUser_Id(user.getId());
 
         String accessToken = jwtService.generateToken(
                 user.getId().toString(),

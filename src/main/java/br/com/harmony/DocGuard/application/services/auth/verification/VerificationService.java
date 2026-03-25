@@ -50,10 +50,6 @@ public class VerificationService {
         }
 
         if (otpToken.getType() == OtpToken.Type.PASSWORD_RESET) {
-
-            otpToken.setUsed(true);
-            otpRepository.save(otpToken);
-
             return new ApiResponse<>(true, "Token valid. You can change your password.", null);
         }
 

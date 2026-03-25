@@ -32,7 +32,7 @@ public class ForgotPasswordService {
         var user =  userRepository.findByEmail(request.getEmail());
 
         if(user.isEmpty()){
-            throw new ApiException("User not found", HttpStatus.NOT_FOUND);
+            return new ApiResponse<>(true, "If this email exists, you will receive an email", null);
         }
 
         String otp = UUID.randomUUID().toString();
@@ -48,6 +48,6 @@ public class ForgotPasswordService {
 
         emailService.sendEmail(user.get().getEmail(), user.get().getFirstName(), "https://www.docguard.com.br/sign-up/verification?token=" + otp, EmailService.EmailType.PASSWORD_RESET);
 
-        return new ApiResponse<>(true, "User created successfully", null);
+        return new ApiResponse<>(true, "If this email exists, you will receive an email", null);
     }
 }
