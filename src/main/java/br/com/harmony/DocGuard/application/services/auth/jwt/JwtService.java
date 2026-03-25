@@ -2,6 +2,8 @@ package br.com.harmony.DocGuard.application.services.auth.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -11,10 +13,14 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private final String SECRET = "minha-chave-super-secreta-com-pelo-menos-32-bytes";
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration}")
+    private long expiration;
 
     private Key getKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes());
+        return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
     public String generateToken(String userId, String role, String plan) {
@@ -23,7 +29,7 @@ public class JwtService {
                 .claim("role", role)
                 .claim("plan", plan)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 86400000)) // 24h
+                .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getKey())
                 .compact();
     }

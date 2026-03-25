@@ -23,14 +23,13 @@ public class ResetPasswordService {
     private final PasswordEncoder passwordEncoder;
     private final SessionRepository sessionRepository;
 
-    public ResetPasswordService(UserRepository userRepository, EmailService emailService,  OtpRepository otpRepository,
-                               SessionRepository sessionRepository) {
+    public ResetPasswordService(UserRepository userRepository, EmailService emailService, OtpRepository otpRepository,
+                                SessionRepository sessionRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.otpRepository = otpRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
         this.sessionRepository = sessionRepository;
-
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
