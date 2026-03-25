@@ -29,6 +29,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Plan plan;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
@@ -43,5 +46,11 @@ public class User {
         FREE,
         START,
         EXCLUSIVE
+    }
+
+    public enum Status {
+        ACTIVE,
+        SUSPENDED,
+        PENDING_VERIFICATION
     }
 }

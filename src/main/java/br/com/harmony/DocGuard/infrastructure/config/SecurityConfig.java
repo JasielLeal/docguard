@@ -1,4 +1,4 @@
-package br.com.harmony.DocGuard.infrastructure.repository.config;
+package br.com.harmony.DocGuard.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +26,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/users",
-                                "/users/auth",
+                                "/auth",
+                                "/auth",
                                 "/auth/refresh",
+                                "/auth/verification-otp",
+                                "/auth/forgot-password",
+                                "/auth/reset-password",
 
                                 // Swagger
                                 "/v3/api-docs/**",

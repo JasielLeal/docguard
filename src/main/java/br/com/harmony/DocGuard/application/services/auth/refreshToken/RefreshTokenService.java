@@ -1,7 +1,9 @@
 package br.com.harmony.DocGuard.application.services.auth.refreshToken;
 
-import br.com.harmony.DocGuard.infrastructure.repository.config.ApiResponse;
+import br.com.harmony.DocGuard.infrastructure.config.ApiException;
+import br.com.harmony.DocGuard.infrastructure.config.ApiResponse;
 import br.com.harmony.DocGuard.infrastructure.repository.session.SessionRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,17 +19,17 @@ public class RefreshTokenService {
        var session = sessionRepository.findByRefreshToken(request.getRefreshToken());
 
        if(session.isEmpty()){
-           return new ApiResponse<>(false, "Invalid refresh token", null);
+           throw new ApiException("Invalid refresh token", HttpStatus.BAD_REQUEST);
        }
 
        var currentSession = session.get();
 
        if(currentSession.isExpired()){
-           return new ApiResponse<>(false, "Invalid refresh token", null);
+           throw new ApiException("Invalid refresh token", HttpStatus.BAD_REQUEST);
        }
 
        if(currentSession.isRevoked()){
-           return new ApiResponse<>(false, "Invalid refresh token", null);
+           throw new ApiException("Invalid refresh token", HttpStatus.BAD_REQUEST);
        }
 
        currentSession.setRevoked(true);
