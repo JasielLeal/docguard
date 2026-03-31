@@ -42,10 +42,6 @@ public class ResetPasswordService {
             throw new ApiException("Token already used", HttpStatus.BAD_REQUEST);
         }
 
-        if (!otpToken.getUser().getEmail().equalsIgnoreCase(request.getEmail())) {
-            throw new ApiException("Invalid token", HttpStatus.BAD_REQUEST);
-        }
-
         if (otpToken.getExpiresAt().isBefore(java.time.LocalDateTime.now())) {
             throw new ApiException("Token expired", HttpStatus.BAD_REQUEST);
         }

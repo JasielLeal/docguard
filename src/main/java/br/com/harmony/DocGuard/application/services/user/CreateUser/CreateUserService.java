@@ -60,7 +60,7 @@ public class CreateUserService {
 
         otpRepository.save(otpToken);
 
-        emailService.sendEmail(user.getEmail(), user.getFirstName(), "https://www.docguard.com.br/sign-up/verify-email?token" + token, EmailService.EmailType.EMAIL_VERIFICATION);
+        emailService.sendEmail(user.getEmail(), user.getFirstName(), "http://localhost:3000/verify-email?token=" + token, EmailService.EmailType.EMAIL_VERIFICATION);
 
         return new ApiResponse<>(true, "User created successfully", null);
     }

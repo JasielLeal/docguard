@@ -35,6 +35,10 @@ public class JwtService {
     }
 
     public String extractEmail(String token) {
+        return null;
+    }
+
+    public String extractUserId(String token) {
         return Jwts.parser()
                 .verifyWith((SecretKey) getKey())
                 .build()

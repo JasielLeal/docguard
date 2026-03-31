@@ -29,13 +29,23 @@ public class ForgotPasswordService {
 
     @Transactional
     public ApiResponse<Void> execute(ForgotPasswordRequest request) {
-        var user =  userRepository.findByEmail(request.getEmail());
+        var user = userRepository.findByEmail(request.getEmail());
 
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             return new ApiResponse<>(true, "If this email exists, you will receive an email", null);
         }
 
-        String otp = UUID.randomUUID().toString();
+        // Invalida OTPs anteriores do mesmo tipo
+        otpRepository.findAllByUserIdAndTypeAndUsedFalse(user.get().getId(), OtpToken.Type.PASSWORD_RESET)
+                .forEach(otp -> {
+                    otp.setUsed(true);
+                    otpRepository.save(otp);
+                });
+
+        // Gera novo OTP seguro
+        byte[] bytes = new byte[32];
+        new java.security.SecureRandom().nextBytes(bytes);
+        String otp = java.util.HexFormat.of().formatHex(bytes);
 
         OtpToken otpToken = new OtpToken();
         otpToken.setCode(otp);
@@ -46,7 +56,12 @@ public class ForgotPasswordService {
 
         otpRepository.save(otpToken);
 
-        emailService.sendEmail(user.get().getEmail(), user.get().getFirstName(), "https://www.docguard.com.br/sign-up/verification?token=" + otp, EmailService.EmailType.PASSWORD_RESET);
+        emailService.sendEmail(
+                user.get().getEmail(),
+                user.get().getFirstName(),
+                "http://localhost:3000/reset-password?token=" + otp,
+                EmailService.EmailType.PASSWORD_RESET
+        );
 
         return new ApiResponse<>(true, "If this email exists, you will receive an email", null);
     }

@@ -194,7 +194,6 @@ class ResetPasswordServiceTest {
     private ResetPasswordRequest buildRequest(String otpCode, String email, String newPassword) {
         var request = new ResetPasswordRequest();
         request.setOtpCode(otpCode);
-        request.setEmail(email);
         request.setNewPassword(newPassword);
         return request;
     }

@@ -10,4 +10,7 @@ import java.util.UUID;
 public interface OtpRepository extends JpaRepository<OtpToken, UUID> {
     Optional<OtpToken> findOtpTokenByCode(String code);
     List<OtpToken> findUserOtpTokenByCode(String code);
+    List<OtpToken> findAllByUser_IdAndTypeAndUsedFalse(UUID userId, OtpToken.Type type);
+
+    List<OtpToken> findAllByUserIdAndTypeAndUsedFalse(UUID userId, OtpToken.Type type);
 }

@@ -11,9 +11,6 @@ import lombok.Setter;
 public class ResetPasswordRequest {
 
     @NotBlank
-    String email;
-
-    @NotBlank
     @Size(min = 6, max = 128)
     String newPassword;
 

@@ -22,7 +22,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
             "/auth/reset-password",   new int[]{5,  15},
             "/auth/verification-otp", new int[]{5,  15},
             "/auth/refresh",          new int[]{20, 15},
-            "/users",                 new int[]{5,  15}
+            "/users",                 new int[]{100,  15}
     );
 
     @Override
