@@ -21,6 +21,7 @@ public class ListEnterpriseDocumentsResponse {
     @Builder
     public static class DocumentInfo {
 
+        private String id;
         private String name;
         private String type;
         private LocalDateTime uploadedAt;
@@ -41,6 +42,7 @@ public class ListEnterpriseDocumentsResponse {
             else status = "Válido";
 
             return DocumentInfo.builder()
+                    .id(String.valueOf(doc.getId()))
                     .name(doc.getLegalName())
                     .type(doc.getType())
                     .uploadedAt(doc.getCreatedAt())
